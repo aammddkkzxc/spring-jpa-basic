@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 public class Member {
-
+//
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
