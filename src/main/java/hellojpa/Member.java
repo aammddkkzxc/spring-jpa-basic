@@ -6,9 +6,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR", // 어플리케이션에서 사용할 이름
+        sequenceName = "MEMBER_SEQ"  //매핑할 데이터베이스 시퀀스 이름
+)
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
 
     @Column(name = "name", nullable = false)
