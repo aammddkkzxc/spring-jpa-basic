@@ -1,4 +1,6 @@
 package hellojpa;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -7,6 +9,20 @@ public class Member {
 
     @Id
     private Long id;
+
+    @Column(name = "userName", length = 50)
+    private String name;
+
+    @Column(unique = true)
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
@@ -23,7 +39,5 @@ public class Member {
     public void setName(String name) {
         this.name = name;
     }
-
-    private String name;
 
 }
