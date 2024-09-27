@@ -2,6 +2,7 @@ package hellojpa.jpabook.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ public class Member {
     private Long id;
 
     @OneToMany(mappedBy = "member")
-    private List<Order> orderList;
+    private List<Order> orderList = new ArrayList<>();
 
     private String name;
 
