@@ -65,7 +65,7 @@ public class Member {
         return orderList;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    public void addOrder(Order order) {
+        orderList.add(order);
     }
 }

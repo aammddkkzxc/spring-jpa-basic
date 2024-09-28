@@ -34,7 +34,7 @@ public class Delivery {
         this.id = id;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "delivery")
     private Order order;
 
     @Enumerated(EnumType.STRING)

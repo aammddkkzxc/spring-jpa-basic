@@ -20,23 +20,19 @@ public class JpaMain {
         try {
             Member member = new Member();
             member.setName("hi");
+
+            Order order = new Order();
+            order.setOrderStatus(OrderStatus.ORDER);
+            order.setMember(member);
+
             em.persist(member);
+            em.persist(order);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println(refMember.getClass());
-            Member findMember = em.find(Member.class, member.getId());
-            System.out.println(findMember.getClass());
-
-            System.out.println("is same member? " + (findMember == refMember));
-            System.out.println(refMember.getName());
-
-//            tx.commit();
-            em.detach(refMember);
-
-            System.out.println(refMember.getName());
+//            em.find(Order.class, order.getId());
+            List<Order> orders = em.createQuery("select o from Order o", Order.class).getResultList();
 
             tx.commit();
         } catch (Exception e) {

@@ -60,6 +60,7 @@ public class Order extends BaseEntity{
 
     public void setMember(Member member) {
         this.member = member;
+        member.addOrder(this);
     }
 
     public List<OrderItem> getOrderItems() {
