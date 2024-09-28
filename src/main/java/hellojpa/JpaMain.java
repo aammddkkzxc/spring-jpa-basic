@@ -1,5 +1,7 @@
 package hellojpa;
 
+import hellojpa.jpabook.cascadepractice.Child;
+import hellojpa.jpabook.cascadepractice.Parent;
 import hellojpa.jpabook.entity.Member;
 import hellojpa.jpabook.entity.Order;
 import hellojpa.jpabook.entity.OrderStatus;
@@ -18,21 +20,24 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setName("hi");
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Order order = new Order();
-            order.setOrderStatus(OrderStatus.ORDER);
-            order.setMember(member);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.persist(member);
-            em.persist(order);
+            em.persist(parent);
+            em.persist(child1);
+            em.persist(child2);
 
             em.flush();
             em.clear();
 
-//            em.find(Order.class, order.getId());
-            List<Order> orders = em.createQuery("select o from Order o", Order.class).getResultList();
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+//            em.remove(findParent);
+
 
             tx.commit();
         } catch (Exception e) {
