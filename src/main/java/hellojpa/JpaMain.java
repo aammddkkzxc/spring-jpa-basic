@@ -22,25 +22,26 @@ public class JpaMain {
             member.setName("hi");
             em.persist(member);
 
-            Order order = new Order();
-            order.setOrderStatus(OrderStatus.ORDER);
-            order.setMember(member);
-            em.persist(order);
+            em.flush();
+            em.clear();
 
-//            member.getOrderList().add(order);
+            Member refMember = em.getReference(Member.class, member.getId());
+            System.out.println(refMember.getClass());
+            Member findMember = em.find(Member.class, member.getId());
+            System.out.println(findMember.getClass());
 
-//            em.flush();
-//            em.clear();
-//            Member findMember = em.find(Member.class, member.getId());
-//            List<Order> orders = findMember.getOrderList();
-//            for (Order oo : orders) {
-//                System.out.println(oo);
-//            }
+            System.out.println("is same member? " + (findMember == refMember));
+            System.out.println(refMember.getName());
 
+//            tx.commit();
+            em.detach(refMember);
+
+            System.out.println(refMember.getName());
 
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         } finally {
             em.close();
         }
