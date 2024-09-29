@@ -46,7 +46,7 @@ public class JpaMain {
         } finally {
             em.close();
         }
-
+//
         emf.close();
     }
 }
