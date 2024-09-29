@@ -1,9 +1,13 @@
 package hellojpa.jpabook.entity;
 
+import hellojpa.jpabook.valuetype.Address;
+import hellojpa.jpabook.valuetype.Period;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member {
@@ -17,9 +21,16 @@ public class Member {
 
     private String name;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @ElementCollection
+    @CollectionTable(name = "food", joinColumns = @JoinColumn(name = "member_id"))
+    private Set<String> foods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "address", joinColumns = @JoinColumn(name = "member_id"))
+    private List<Address> addressList = new ArrayList<>();
+
+    @Embedded
+    private Period period;
 
     public Long getId() {
         return id;
@@ -37,35 +48,39 @@ public class Member {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
     public List<Order> getOrderList() {
         return orderList;
     }
 
     public void addOrder(Order order) {
         orderList.add(order);
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public Set<String> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(Set<String> foods) {
+        this.foods = foods;
+    }
+
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 }

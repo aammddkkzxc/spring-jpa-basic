@@ -5,6 +5,7 @@ import hellojpa.jpabook.cascadepractice.Parent;
 import hellojpa.jpabook.entity.Member;
 import hellojpa.jpabook.entity.Order;
 import hellojpa.jpabook.entity.OrderStatus;
+import hellojpa.jpabook.valuetype.Address;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,24 +21,23 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Child child1 = new Child();
-            Child child2 = new Child();
+            Member member = new Member();
+            member.setName("mem1");
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+            member.getFoods().add("피자");
+            member.getFoods().add("치킨");
 
-            em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
+            member.getAddressList().add(new Address("hi", "hello", "안녕"));
+            member.getAddressList().add(new Address("hi2", "hello2", "안녕2"));
 
+            em.persist(member);
             em.flush();
             em.clear();
 
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
-//            em.remove(findParent);
-
+            //equals비교 통해서 삭제함
+            Member member1 = em.find(Member.class, member.getId());
+            member1.getAddressList().remove(new Address("hi", "hello", "안녕"));
+            em.persist(member1);
 
             tx.commit();
         } catch (Exception e) {
